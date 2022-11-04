@@ -275,6 +275,7 @@
     <Content Include="Content\Bootstrap\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-grid.min.css.map" />
     <Content Include="Content\Bootstrap\bootstrap-grid.css.map" />
+    <None Include="Properties\PublishProfiles\AzureFileStorage - Web Deploy.pubxml" />
     <None Include="Scripts\Jquery\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Jquery\jquery-3.4.1.js" />
     <Content Include="Scripts\Jquery\jquery-3.4.1.min.js" />

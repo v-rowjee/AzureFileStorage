@@ -15,9 +15,9 @@ namespace FileStorage.Services
 {
     public class AzureFileStorage
     {
-        private const string connectionString = "DefaultEndpointsProtocol=https;AccountName=stproductiondemo;AccountKey=bt9lGVgcZ676Pu0z0dPp12o4ImLCxNjgw2GFfoX4LILAg76DslKIYEIiVTpguQ75Oro0eklIWQDy+AStOdG4NQ==;EndpointSuffix=core.windows.net";
-        private const string shareName = "sample-share";
-        private const string dirName = "sample-dir";
+        private const string connectionString = "DefaultEndpointsProtocol=https;AccountName=jedifilestorageaccount;AccountKey=lLJPCZqidvkjfoOiGOA5WEkCdSsZdrQfjt021sGK5g0hq65OuoBm8gD0Rx1C9gcjrNwYzDYR9kCe+ASteLYwzw==;EndpointSuffix=core.windows.net";
+        private const string shareName = "share";
+        private const string dirName = "dir";
 
 
         public static void UploadFile(string name, string path)
@@ -64,7 +64,7 @@ namespace FileStorage.Services
             CloudFileDirectory rootDir = share.GetRootDirectoryReference();
 
             // Get a reference to the directory.
-            CloudFileDirectory sampleDir = rootDir.GetDirectoryReference("sample-dir");
+            CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(dirName);
 
             // Get a reference to the file we created previously.
             CloudFile file = sampleDir.GetFileReference(name);
@@ -75,12 +75,6 @@ namespace FileStorage.Services
 
         public static IEnumerable<ShareFileItem> ViewFiles()
         {
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=stproductiondemo;AccountKey=bt9lGVgcZ676Pu0z0dPp12o4ImLCxNjgw2GFfoX4LILAg76DslKIYEIiVTpguQ75Oro0eklIWQDy+AStOdG4NQ==;EndpointSuffix=core.windows.net";
-
-            // Name of the share, directory, and file we'll download from
-            string shareName = "sample-share";
-            string dirName = "sample-dir";
-
             ShareClient share = new ShareClient(connectionString, shareName);
             ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
             var files = directory.GetFilesAndDirectories();
