@@ -1,0 +1,17 @@
+﻿* {
+    font-family: Verdana
+}
+#download {
+    background: none;
+    border: none;
+    color: #0d6efd;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.logo {
+    height: 2.5rem;
+}
+
+.fullscreen {
+    height: calc(100vh - 130px);
+}

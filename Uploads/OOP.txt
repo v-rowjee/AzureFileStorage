@@ -1,0 +1,45 @@
+int i; // default 0
+int? i //default null
+
+bool b // defaut false
+
+// value type to ref type
+int x = 6
+object wrapper = x //type ref
+
+int y = (int) wrapper // type val
+
+-----
+foreach(string name in names)
+-------
+continue : skips everything after the continue and loop again
+-----
+true ^ false == true
+---
+//read only
+public string name => "Jane"
+
+---------------------------
+class animal
+{
+  animal(string name){...}
+  ...
+}
+
+class dog : animal 
+{
+  dog(string name) :base(name){...}
+  ...
+}
+
+
+-----------------------------
+
+Generic: strongly typed to a specific object
+[ internal class Blabla<T>{ T name; }
+
+NOTE:
+dependency inversion principle (https://www.tutorialsteacher.com/ioc/dependency-inversion-principle)
+covariance and contravariance ()
+reflection (https://stackify.com/what-is-c-reflection/)
+

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="text-center mb-5">
+    <div class="row justify-content-around align-items-center text-center">
+        <div class="col-md-4">
+            <img src="~/Content/Images/upload.png" class="img-fluid px-5 py-4" alt="upload" />
+            @Html.ActionLink("Upload A File", "Index", "Upload", null, new { @class = "btn btn-primary w-100" })
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/Images/search.png" class="img-fluid px-5 py-4" alt="search" />
+            @Html.ActionLink("View All Files", "Index", "Files", null, new { @class = "btn btn-primary w-100" })
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Files";
+}
+
+<h2 class="display-6 fw-bold my-4">List of Files</h2>
+
+<div class="table-responsive mb-5">
+    <table class="table table-borderless table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Size</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var File in ViewBag.Files)
+            {
+                <tr>
+                    <td>@File.Id</td>
+                    <td>@File.Name</td>
+                    <td>@File.FileSize B</td>
+                    <td>
+                        @using (Html.BeginForm("Download", "Files", FormMethod.Get, null))
+                        {
+                            <input type="hidden" name="id" value="@File.Name" />
+                            <input type="submit" id="download" value="Download" />
+                            @ViewBag.Message
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

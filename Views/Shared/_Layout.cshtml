@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Azure File Storage</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar navbar-expand-md sticky-top bg-light">
+        <div class="container">
+            <img src="~/Content/Images/azure.png" class="logo me-3" />
+            @Html.ActionLink("Azure File Storage", "Index", "Home", new { area = "" }, new { @class = "navbar-brand display-4" })
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item mx-2">
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = @ViewBag.Title == "Home" ? "nav-link active" : "nav-link" })
+                    </li>
+                    <li class="nav-item mx-2">
+                        @Html.ActionLink("Upload", "Index", "Upload", null, new { @class = @ViewBag.Title == "Upload" ? "nav-link active" : "nav-link" })
+                    </li>
+                    <li class="nav-item mx-2">
+                        @Html.ActionLink("Files", "Index", "Files", null, new { @class = @ViewBag.Title == "Files" ? "nav-link active" : "nav-link" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-4">
+        @RenderBody()
+        <br /><hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Azure File Storage</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/script")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
