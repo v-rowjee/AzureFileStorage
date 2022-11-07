@@ -22,7 +22,7 @@ namespace FileStorage.Controllers
             try
             {
                 string _FileName = Path.GetFileName(file.FileName);
-                string _path = Path.Combine(Server.MapPath("~/Uploads"), _FileName);
+                string _path = Path.Combine(Server.MapPath("~/Content/Uploads"), _FileName);
                 // save file
                 file.SaveAs(_path);
                 // upload file
@@ -39,5 +39,6 @@ namespace FileStorage.Controllers
                 return View();
             }
         }
+
     }
 }
