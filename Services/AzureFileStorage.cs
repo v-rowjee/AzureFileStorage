@@ -20,14 +20,8 @@ namespace FileStorage.Services
         private const string dirName = "dir";
 
 
-        public static void UploadFile(string name, string path)
+        public static void UploadFile(string fileName, string filePath)
         {
-            // Name of the file we'll create
-            string fileName = name;
-
-            // Path to the local file to upload
-            string localFilePath = path;
-
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
             share.CreateIfNotExists();
@@ -38,7 +32,7 @@ namespace FileStorage.Services
 
             // Get a reference to a file and upload it
             ShareFileClient file = directory.GetFileClient(fileName);
-            using (FileStream stream = File.OpenRead(localFilePath))
+            using (FileStream stream = File.OpenRead(filePath))
             {
                 file.Create(stream.Length);
                 file.UploadRange(
@@ -50,7 +44,7 @@ namespace FileStorage.Services
         }
 
 
-        public static CloudFile GetFile(string name)
+        public static CloudFile DownloadFile(string name)
         {
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -85,6 +79,30 @@ namespace FileStorage.Services
             }
 
             return files;
+        }
+
+
+        public static bool DeleteFile(string fileName)
+        {
+            try
+            {
+                // Get a reference to a share and then create it
+                ShareClient share = new ShareClient(connectionString, shareName);
+                share.CreateIfNotExists();
+
+                // Get a reference to a directory and create it
+                ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+                directory.CreateIfNotExists();
+
+                // Get a reference to a file and upload it
+                ShareFileClient file = directory.GetFileClient(fileName);
+            
+                return file.DeleteIfExists();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

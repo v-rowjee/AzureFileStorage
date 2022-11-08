@@ -3,6 +3,19 @@
     ViewBag.Title = "Files";
 }
 
+@if (TempData["FileDeletedSuccess"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["FileDeletedSuccess"] - File Deleted Successfully
+    </div>
+}
+@if (TempData["FileDeletedFailed"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["FileDeletedFailed"] - An Error Occured, Could Not Delete file.
+    </div>
+}
+
 <h2 class="display-6 fw-bold my-4">List of Files</h2>
 
 <div class="table-responsive mb-5">
@@ -12,24 +25,34 @@
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Size</th>
-                <th scope="col">Action</th>
+                <th scope="col" class="text-center text-muted">Download</th>
+                <th scope="col" class="text-center text-muted">Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var File in ViewBag.Files)
             {
-                <tr>
+                <tr class="align-middle">
                     <td>@File.Id</td>
                     <td>@File.Name</td>
-                    <td>@File.FileSize B</td>
-                    <td>
-                        @using (Html.BeginForm("Download", "Files", FormMethod.Get, null))
+                    <td class="text-nowrap">@File.FileSize B</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Download", "Files", FormMethod.Post))
                         {
-                            <input type="hidden" name="id" value="@File.Name" />
-                            <input type="submit" id="download" value="Download" />
-                            @ViewBag.Message
+                            <input type="hidden" name="name" value="@File.Name" />
+                            <button id="download" class="btn btn-light text-success px-5" title="Download File">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
                         }
-
+                    </td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "Files", FormMethod.Post))
+                        {
+                            <input type="hidden" name="name" value="@File.Name" />
+                            <button id="delete" class="btn btn-light text-danger px-4" title="Delete File">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        }
                     </td>
                 </tr>
             }

@@ -30,12 +30,12 @@ namespace FileStorage.Controllers
                 // delete file
                 System.IO.File.Delete(_path);
 
-                ViewBag.Message = "Success";
+                ViewBag.FileUploadSuccess = _FileName;
                 return View();
             }
             catch
             {
-                ViewBag.Message = "Error";
+                ViewBag.FileUploadFailed = "Error";
                 return View();
             }
         }

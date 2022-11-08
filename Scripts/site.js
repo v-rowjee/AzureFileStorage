@@ -1,4 +1,4 @@
-﻿$('input[type=file]').change(function () {
-    console.dir(this.value);
-    console.dir(this.files[0])
-})
+﻿// prevent form resubmission
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+}

@@ -22,15 +22,16 @@ namespace FileStorage.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Download(string id)
+        // GET: Files/Download
+        [HttpPost]
+        public ActionResult Download(string name)
         {
-            var fileName = id;
+            var fileName = name;
             MemoryStream ms = new MemoryStream();
 
             try
             {
-                var file = AzureFileStorage.GetFile(fileName);
+                var file = AzureFileStorage.DownloadFile(fileName);
 
                 // Write the contents of the file to the console window.
                 file.DownloadToStreamAsync(ms);
@@ -43,6 +44,29 @@ namespace FileStorage.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+
+        // POST: Files/Delete
+        [HttpPost]
+        public ActionResult Delete(string name)
+        {
+            var fileDeleted = AzureFileStorage.ViewFiles()
+                .FirstOrDefault(m => m.Name.Equals(name));
+
+            var result = AzureFileStorage.DeleteFile(name);
+
+            if (result)
+            {
+                TempData["FileDeletedSuccess"] = fileDeleted.Name;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["FileDeletedFailed"] = fileDeleted.Name;
+                return new EmptyResult();
+            }
+        }
+
 
     }
 }
