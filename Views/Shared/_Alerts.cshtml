@@ -1,0 +1,45 @@
+﻿@* DELETE *@
+@if (TempData["SuccessDelete"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-trash me-2"></i>
+        <strong>@TempData["SuccessDelete"]</strong> - File Deleted Successfully
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorDelete"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        <strong>@TempData["ErrorDelete"]</strong> - An Error Occured, Could Not Delete file.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@* DOWNLOAD *@
+@if (TempData["ErrorDownload"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        <strong>@TempData["ErrorDownload"]</strong> - An Error Occured, Could Not Download file.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@* UPLOAD *@
+
+@if (TempData["SuccessUpload"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i>
+        <strong>@TempData["SuccessUpload"]</strong> - File was uploaded successfully.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorUpload"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        <strong>An Error Occured</strong> - Could not upload file.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

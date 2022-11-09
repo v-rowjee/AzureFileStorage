@@ -26,5 +26,18 @@ $('#createDir').click(() => {
                 }
             }
         })
+    }else {
+        $('#modal').modal('hide');
     }
 })
+
+
+
+$('#changeDir').change(() => {
+    var URL = window.location.href.split('/')[0]
+
+    URL += $('#changeDir').val()
+
+    window.location.href = URL
+
+});

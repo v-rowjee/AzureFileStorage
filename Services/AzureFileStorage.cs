@@ -67,6 +67,19 @@ namespace FileStorage.Services
             return file;
         }
 
+        public static IEnumerable<ShareFileItem> ViewFiles(string dirName)
+        {
+            ShareClient share = new ShareClient(connectionString, shareName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            var files = directory.GetFilesAndDirectories();
+
+            foreach (var file in files)
+            {
+                Console.WriteLine(file.Name);
+            }
+
+            return files;
+        }
         public static IEnumerable<ShareFileItem> ViewFiles()
         {
             ShareClient share = new ShareClient(connectionString, shareName);

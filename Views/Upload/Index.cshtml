@@ -10,7 +10,7 @@
 
         <h2 class="display-4 fw-bold mb-5">Upload A File</h2>
 
-        @{Html.RenderPartial("~/Views/Shared/_Errors.cshtml");}
+        @{Html.RenderPartial("~/Views/Shared/_Alerts.cshtml");}
 
 
         @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
