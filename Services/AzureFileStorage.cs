@@ -73,9 +73,9 @@ namespace FileStorage.Services
             ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
             var files = directory.GetFilesAndDirectories();
 
-            for (int i = 0; i < files.Count(); i++)
+            foreach (var file in files)
             {
-                Console.WriteLine($"{i + 1}. {files.ElementAt(i).Name}");
+                Console.WriteLine(file.Properties.CreatedOn);
             }
 
             return files;
