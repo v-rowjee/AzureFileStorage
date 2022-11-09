@@ -22,7 +22,7 @@ namespace FileStorage.Controllers
             return View();
         }
 
-        // GET: Files/Download
+        // POST: Files/Download
         [HttpPost]
         public ActionResult Download(string name)
         {
@@ -36,11 +36,12 @@ namespace FileStorage.Controllers
                 // Write the contents of the file to the console window.
                 file.DownloadToStreamAsync(ms);
                 Stream blobStream = file.OpenReadAsync().Result;
+
                 return File(blobStream, file.Properties.ContentType, file.Name);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                ViewBag.Message = e.Message;
+                TempData["ErrorDownload"] = e.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -57,13 +58,13 @@ namespace FileStorage.Controllers
 
             if (result)
             {
-                TempData["FileDeletedSuccess"] = fileDeleted.Name;
+                TempData["SuccessDelete"] = fileDeleted.Name;
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["FileDeletedFailed"] = fileDeleted.Name;
-                return new EmptyResult();
+                TempData["ErrorDelete"] = fileDeleted.Name;
+                return RedirectToAction("Index");
             }
         }
 

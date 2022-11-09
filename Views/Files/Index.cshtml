@@ -1,20 +1,8 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Files";
 }
 
-@if (TempData["FileDeletedSuccess"] != null)
-{
-    <div class="alert alert-success" role="alert">
-        @TempData["FileDeletedSuccess"] - File Deleted Successfully
-    </div>
-}
-@if (TempData["FileDeletedFailed"] != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @TempData["FileDeletedFailed"] - An Error Occured, Could Not Delete file.
-    </div>
-}
+@{Html.RenderPartial("~/Views/Shared/_Errors.cshtml");}
 
 <h2 class="display-6 fw-bold my-4">List of Files</h2>
 

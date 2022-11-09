@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "NotFound";
+}
+
+<div class="row align-content-center my-5">
+    <div class="col-12 text-center">
+        <h2 class="display-2 fw-bold text-uppercase my-3">Page Not Found</h2>
+        <span>
+            @Html.ActionLink("Home", "Index", "Home", null, new { @class = "link-secondary" })
+            @Html.ActionLink("Upload", "Index", "Home", null, new { @class = "link-secondary mx-4" })
+            @Html.ActionLink("Files", "Index", "Home", null, new { @class = "link-secondary" })
+        </span>
+    </div>
+</div>
+

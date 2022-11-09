@@ -10,18 +10,7 @@
 
         <h2 class="display-4 fw-bold mb-5">Upload A File</h2>
 
-        @if (ViewBag.FileUploadSuccess != null)
-        {
-            <div class="alert alert-success mb-5" role="alert">
-                @ViewBag.FileUploadSuccess - File was uploaded successfully.
-            </div>
-        }
-        @if (ViewBag.FileUploadFailed != null)
-        {
-            <div class="alert alert-danger mb-5" role="alert">
-                An Error Occured, Could not upload file.
-            </div>
-        }
+        @{Html.RenderPartial("~/Views/Shared/_Errors.cshtml");}
 
         @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {

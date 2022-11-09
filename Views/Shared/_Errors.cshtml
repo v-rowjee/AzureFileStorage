@@ -1,0 +1,35 @@
+﻿@* DELETE *@
+@if (TempData["SuccessDelete"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessDelete"] - File Deleted Successfully
+    </div>
+}
+@if (TempData["ErrorDelete"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorDelete"] - An Error Occured, Could Not Delete file.
+    </div>
+}
+@* DOWNLOAD *@
+@if (TempData["ErrorDownload"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorDownload"] - An Error Occured, Could Not Download file.
+    </div>
+}
+
+@* UPLOAD *@
+
+@if (TempData["SuccessUpload"] != null)
+{
+    <div class="alert alert-success mb-5" role="alert">
+        @TempData["SuccessUpload"] - File was uploaded successfully.
+    </div>
+}
+@if (TempData["ErrorUpload"] != null)
+{
+    <div class="alert alert-danger mb-5" role="alert">
+        An Error Occured, Could not upload file.
+    </div>
+}
