@@ -20,7 +20,7 @@ namespace FileStorage.Services
         private const string dirName = "dir";
 
 
-        public static void UploadFile(string fileName, string filePath)
+        public static void UploadFile(string dirName, string fileName, string filePath)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);

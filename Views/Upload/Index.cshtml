@@ -12,23 +12,33 @@
 
         @{Html.RenderPartial("~/Views/Shared/_Errors.cshtml");}
 
-        @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="row">
-                <div class="col">
-                    <select name="dir" class="form-select mb-3">
-                        @foreach (var Dir in ViewBag.Directories)
-                        {
-                            <option value="@Dir.Name">@Dir.Name</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-auto">
 
+        @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card mb-5">
+                <div class="card-header">
+                    <div class="text-muted">Directory</div>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col">
+                            <select name="dir" class="form-select">
+                                @foreach (var Dir in ViewBag.Directories)
+                                {
+                                    <option value="@Dir.Name">@Dir.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-light px-5" title="Create Directory" data-bs-toggle="modal" data-bs-target="#modal">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
-                @Html.TextBox("file", "", new { @type = "file", @class = "form-control mb-3" }) <br />
+                @Html.TextBox("file", "", new { @type = "file", @class = "form-control mb-4" })
                 <input type="submit" id="upload" class="btn btn-primary w-100" value="Upload" />
             </div>
         }
