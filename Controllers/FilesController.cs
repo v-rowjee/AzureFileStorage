@@ -17,8 +17,8 @@ namespace FileStorage.Controllers
         public ActionResult Index()
         {
             var files = AzureFileStorage.ViewFiles();
-            ViewBag.Files = files.ToList();
-
+            ViewBag.Files = files;
+            
             return View();
         }
 
