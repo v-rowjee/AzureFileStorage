@@ -75,7 +75,7 @@ namespace FileStorage.Services
 
             foreach (var file in files)
             {
-                Console.WriteLine(file.Properties.CreatedOn);
+                Console.WriteLine(file.Name);
             }
 
             return files;
