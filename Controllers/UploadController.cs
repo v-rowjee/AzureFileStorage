@@ -13,7 +13,7 @@ namespace FileStorage.Controllers
         // GET: Upload
         public ActionResult Index()
         {
-            ViewBag.Directories = AzureFileStorage
+            ViewBag.Directories = AzureFileStorage.GetDirectories();
             return View();
         }
 

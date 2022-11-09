@@ -105,8 +105,36 @@ namespace FileStorage.Services
             }
         }
 
+        // DIR
 
+        public static IEnumerable<ShareFileItem> GetDirectories()
+        {
+            ShareClient share = new ShareClient(connectionString, shareName);
+            share.CreateIfNotExists();
 
+            return share.GetRootDirectoryClient().GetFilesAndDirectories();
+        }
+
+        public static bool CreateDirectory(string _dirName)
+        {
+            // Get a reference to a share and then create it
+            ShareClient share = new ShareClient(connectionString, shareName);
+            share.CreateIfNotExists();
+
+            // Get a reference to a directory and create it
+            ShareDirectoryClient directory = share.GetDirectoryClient(_dirName);
+
+            try
+            {
+                directory.CreateIfNotExists();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
 
     }
 }

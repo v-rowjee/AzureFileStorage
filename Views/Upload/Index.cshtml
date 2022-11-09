@@ -14,13 +14,20 @@
 
         @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            <div class="row">
+                <div class="col">
+                    <select name="dir" class="form-select mb-3">
+                        @foreach (var Dir in ViewBag.Directories)
+                        {
+                            <option value="@Dir.Name">@Dir.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+
+                </div>
+            </div>
             <div>
-                <select name="dir" class="form-select">
-                    @foreach (var Dir in ViewBag.Directories)
-                    {
-                        <option value="@Dir.Name">@Dir.Name</option>
-                    }
-                </select>
                 @Html.TextBox("file", "", new { @type = "file", @class = "form-control mb-3" }) <br />
                 <input type="submit" id="upload" class="btn btn-primary w-100" value="Upload" />
             </div>
