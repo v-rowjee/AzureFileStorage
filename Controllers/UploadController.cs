@@ -13,12 +13,14 @@ namespace FileStorage.Controllers
         // GET: Upload
         public ActionResult Index()
         {
+            ViewBag.Directories = AzureFileStorage.GetDirectories();
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
+        public ActionResult UploadFile(string dir, HttpPostedFileBase file)
         {
+            var _dir = dir;
             try
             {
                 string _FileName = Path.GetFileName(file.FileName);
@@ -26,18 +28,27 @@ namespace FileStorage.Controllers
                 // save file
                 file.SaveAs(_path);
                 // upload file
-                AzureFileStorage.UploadFile(_FileName, _path);
+                AzureFileStorage.UploadFile(_dir, _FileName, _path);
                 // delete file
                 System.IO.File.Delete(_path);
 
                 TempData["SuccessUpload"] = _FileName;
-                return View();
+                return RedirectToAction("Index");
             }
             catch
             {
                 TempData["ErrorUpload"] = "Error";
-                return View();
+                return RedirectToAction("Index");
             }
+        }
+
+        // POST: Upload/CreateDir
+        [HttpPost]
+        public JsonResult CreateDir(string dirname)
+        {
+            var result = AzureFileStorage.CreateDirectory(dirname);
+
+            return Json(new { result = result });
         }
 
     }

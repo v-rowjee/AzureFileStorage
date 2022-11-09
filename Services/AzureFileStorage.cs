@@ -20,7 +20,7 @@ namespace FileStorage.Services
         private const string dirName = "dir";
 
 
-        public static void UploadFile(string fileName, string filePath)
+        public static void UploadFile(string dirName, string fileName, string filePath)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
@@ -67,6 +67,19 @@ namespace FileStorage.Services
             return file;
         }
 
+        public static IEnumerable<ShareFileItem> ViewFiles(string dirName)
+        {
+            ShareClient share = new ShareClient(connectionString, shareName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+            var files = directory.GetFilesAndDirectories();
+
+            foreach (var file in files)
+            {
+                Console.WriteLine(file.Name);
+            }
+
+            return files;
+        }
         public static IEnumerable<ShareFileItem> ViewFiles()
         {
             ShareClient share = new ShareClient(connectionString, shareName);
@@ -103,6 +116,37 @@ namespace FileStorage.Services
             {
                 return false;
             }
+        }
+
+        // DIR
+
+        public static IEnumerable<ShareFileItem> GetDirectories()
+        {
+            ShareClient share = new ShareClient(connectionString, shareName);
+            share.CreateIfNotExists();
+
+            return share.GetRootDirectoryClient().GetFilesAndDirectories();
+        }
+
+        public static bool CreateDirectory(string _dirName)
+        {
+            // Get a reference to a share and then create it
+            ShareClient share = new ShareClient(connectionString, shareName);
+            share.CreateIfNotExists();
+
+            // Get a reference to a directory and create it
+            ShareDirectoryClient directory = share.GetDirectoryClient(_dirName);
+
+            try
+            {
+                directory.CreateIfNotExists();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
         }
 
     }

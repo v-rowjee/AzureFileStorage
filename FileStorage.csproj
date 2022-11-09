@@ -304,8 +304,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Upload\Index.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
-    <Content Include="Views\Shared\_Errors.cshtml" />
+    <Content Include="Views\Files\Dir.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>

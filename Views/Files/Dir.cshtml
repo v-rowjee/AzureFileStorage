@@ -2,9 +2,41 @@
     ViewBag.Title = "Files";
 }
 
-@{Html.RenderPartial("~/Views/Shared/_Errors.cshtml");}
+@{Html.RenderPartial("~/Views/Shared/_Alerts.cshtml");}
 
-<h2 class="display-6 fw-bold my-4">List of Files</h2>
+<div class="row align-items-center my-4">
+    <div class="col-12 col-md mb-3 mb-md-0">
+        <h2 class="display-6 fw-bold m-0">List of Files</h2>
+    </div>
+    <div class="col-auto">
+        <h2 class="fw-bold m-0">Directory: </h2>
+    </div>
+    <div class="col-6 col-md-2">
+        <div class="dropdown-center">
+            <div class="dropdown w-100">
+                <button class="btn btn-light dropdown-toggle fw-bold w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @ViewBag.CurrentDir
+                </button>
+
+                <ul class="dropdown-menu w-100">
+                    @foreach (var Dir in ViewBag.Directories)
+                    {
+                        if (Dir.Name != ViewBag.CurrentDir)
+                        {
+                            <li><a class="dropdown-item" href="@Url.Action("Dir", new { id=Dir.Name })">@Dir.Name</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        @*<select id="changeDir" class="form-select fw-bold">
+            @foreach (var Dir in ViewBag.Directories)
+            {
+                <option value="@Dir.Name">@Dir.Name</option>
+            }
+        </select>*@
+    </div>
+</div>
 
 <div class="table-responsive mb-5">
     <table class="table table-borderless table-hover">

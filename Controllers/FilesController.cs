@@ -16,9 +16,22 @@ namespace FileStorage.Controllers
         // GET: Files
         public ActionResult Index()
         {
-            var files = AzureFileStorage.ViewFiles();
-            ViewBag.Files = files;
-            
+            return RedirectToAction("Dir", new { id = "dir" });
+        }
+
+        // GET: Files/Dir/xx
+        public ActionResult Dir(string id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction("Dir", new { id = "dir" });
+            }
+            ViewBag.Files = AzureFileStorage.ViewFiles(id);
+
+            ViewBag.Directories = AzureFileStorage.GetDirectories();
+
+            ViewBag.CurrentDir = id;
+
             return View();
         }
 
