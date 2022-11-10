@@ -13,6 +13,17 @@ namespace FileStorage.Controllers
 {
     public class FilesController : Controller
     {
+        IAzureFileStorage AzureFileStorage;
+        public FilesController(IAzureFileStorage AzureFileStorage)
+        {
+            this.AzureFileStorage = AzureFileStorage;
+        }
+        public FilesController()
+        {
+            this.AzureFileStorage = new AzureFileStorage();
+        }
+
+
         // GET: Files
         public ActionResult Index()
         {
@@ -26,7 +37,10 @@ namespace FileStorage.Controllers
             {
                 return RedirectToAction("Dir", new { id = "dir" });
             }
-            ViewBag.Files = AzureFileStorage.ViewFiles(id);
+
+            AzureFileStorage.Init(id);
+
+            ViewBag.Files = AzureFileStorage.ViewFiles();
 
             ViewBag.Directories = AzureFileStorage.GetDirectories();
 
@@ -39,13 +53,16 @@ namespace FileStorage.Controllers
         [HttpPost]
         public ActionResult Download(string dir, string name)
         {
-            var fileName = name;
             var dirName = dir;
+            var fileName = name;
+
             MemoryStream ms = new MemoryStream();
 
             try
             {
-                var file = AzureFileStorage.DownloadFile(dirName, fileName);
+                AzureFileStorage.Init(dirName);
+
+                var file = AzureFileStorage.DownloadFile(fileName);
 
                 // Write the contents of the file to the console window.
                 file.DownloadToStreamAsync(ms);
@@ -65,7 +82,9 @@ namespace FileStorage.Controllers
         [HttpPost]
         public ActionResult Delete(string dir, string name)
         {
-            var fileDeleted = AzureFileStorage.ViewFiles(dir)
+            AzureFileStorage.Init(dir);
+
+            var fileDeleted = AzureFileStorage.ViewFiles()
                 .FirstOrDefault(m => m.Name.Equals(name));
 
             var result = AzureFileStorage.DeleteFile(dir, name);

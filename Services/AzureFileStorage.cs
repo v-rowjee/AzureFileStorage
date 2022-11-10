@@ -10,17 +10,46 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace FileStorage.Services
 {
-    public class AzureFileStorage
+    public interface IAzureFileStorage{
+        void Init();
+        void Init(string dirName);
+        void Init(string shareName, string dirName);
+        void UploadFile(string fileName, string filePath);
+        CloudFile DownloadFile(string fileName);
+        IEnumerable<ShareFileItem> ViewFiles();
+        bool DeleteFile(string fileName);
+        IEnumerable<ShareFileItem> GetDirectories();
+        bool CreateDirectory(string dirName);
+    }
+    public class AzureFileStorage : IAzureFileStorage
     {
-        private const string connectionString = "DefaultEndpointsProtocol=https;AccountName=jedifilestorageaccount;AccountKey=lLJPCZqidvkjfoOiGOA5WEkCdSsZdrQfjt021sGK5g0hq65OuoBm8gD0Rx1C9gcjrNwYzDYR9kCe+ASteLYwzw==;EndpointSuffix=core.windows.net";
-        private const string shareName = "share";
-        private const string dirName = "dir";
+        private string connectionString;
+        private string shareName;
+        private string dirName;
 
+        public AzureFileStorage() {
+            connectionString = ConfigurationManager.AppSettings["connectionString"];
+        }
+        public void Init()
+        {
+            this.shareName = "share";
+        }
+        public void Init(string dirName)
+        {
+            this.shareName = "share";
+            this.dirName = dirName;
+        }
+        public void Init(string shareName,string dirName)
+        {
+            this.shareName = shareName;
+            this.dirName = dirName;
+        }
 
-        public static void UploadFile(string dirName, string fileName, string filePath)
+        public void UploadFile(string fileName, string filePath)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
@@ -44,7 +73,7 @@ namespace FileStorage.Services
         }
 
 
-        public static CloudFile DownloadFile(string dirName, string fileName)
+        public CloudFile DownloadFile(string fileName)
         {
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -67,7 +96,7 @@ namespace FileStorage.Services
             return file;
         }
 
-        public static IEnumerable<ShareFileItem> ViewFiles(string dirName)
+        public IEnumerable<ShareFileItem> ViewFiles()
         {
             ShareClient share = new ShareClient(connectionString, shareName);
             ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
@@ -81,7 +110,8 @@ namespace FileStorage.Services
             return files;
         }
 
-        public static bool DeleteFile(string dirName, string fileName)
+
+        public bool DeleteFile(string fileName)
         {
             try
             {
@@ -106,7 +136,7 @@ namespace FileStorage.Services
 
         // DIR
 
-        public static IEnumerable<ShareFileItem> GetDirectories()
+        public IEnumerable<ShareFileItem> GetDirectories()
         {
             ShareClient share = new ShareClient(connectionString, shareName);
             share.CreateIfNotExists();
@@ -114,7 +144,7 @@ namespace FileStorage.Services
             return share.GetRootDirectoryClient().GetFilesAndDirectories();
         }
 
-        public static bool CreateDirectory(string dirName)
+        public bool CreateDirectory(string dirName)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
