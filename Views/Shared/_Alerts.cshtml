@@ -43,3 +43,39 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
+
+@* DELETE DIR *@
+@if (TempData["SuccessDeleteDir"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-trash me-2"></i>
+        <strong>@TempData["SuccessDeleteDir"]</strong> - Directory Deleted Successfully
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorDeleteDir"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        <strong>@TempData["ErrorDeleteDir"]</strong> - Directory Contains Files. Cannot Delete.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@* CREATE DIR *@
+@if (TempData["SuccessCreateDir"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-trash me-2"></i>
+        <strong>@TempData["SuccessCreateDir"]</strong> - Directory Created Successfully
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (TempData["ErrorCreateDir"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        <strong>@TempData["ErrorCreateDir"]</strong> - An Error Occured. Could Not Create Directory.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

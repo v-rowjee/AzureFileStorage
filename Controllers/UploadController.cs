@@ -57,12 +57,21 @@ namespace FileStorage.Controllers
 
         // POST: Upload/CreateDir
         [HttpPost]
-        public JsonResult CreateDir(string dirname)
+        public ActionResult CreateDir(string dirname)
         {
             AzureFileStorage.Init();
             var result = AzureFileStorage.CreateDirectory(dirname);
 
-            return Json(new { result = result });
+            if (result)
+            {
+                TempData["SuccessCreateDir"] = dirname;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["ErrorCreateDir"] = dirname;
+                return RedirectToAction("Index");
+            }
         }
 
     }

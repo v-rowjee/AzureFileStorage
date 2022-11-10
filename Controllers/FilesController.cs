@@ -92,13 +92,12 @@ namespace FileStorage.Controllers
             if (result)
             {
                 TempData["SuccessDelete"] = fileDeleted.Name;
-                return RedirectToAction("Index");
             }
             else
             {
                 TempData["ErrorDelete"] = fileDeleted.Name;
-                return RedirectToAction("Index");
             }
+            return RedirectToAction("Dir", new { id = dir });
         }
 
 

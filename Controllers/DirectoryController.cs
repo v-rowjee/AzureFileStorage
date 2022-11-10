@@ -31,12 +31,21 @@ namespace FileStorage.Controllers
 
         // POST: Directory/CreateDir
         [HttpPost]
-        public JsonResult CreateDir(string dirname)
+        public ActionResult CreateDir(string dirname)
         {
             AzureFileStorage.Init();
             var result = AzureFileStorage.CreateDirectory(dirname);
 
-            return Json(new { result = result });
+            if (result)
+            {
+                TempData["SuccessCreateDir"] = dirname;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["ErrorCreateDir"] = dirname;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Directory/Delete
@@ -45,19 +54,19 @@ namespace FileStorage.Controllers
         {
             AzureFileStorage.Init(dir);
 
-            var fileDeleted = AzureFileStorage.GetDirectories()
+            var dirDeleted = AzureFileStorage.GetDirectories()
                 .FirstOrDefault(m => m.Name.Equals(dir));
 
             var result = AzureFileStorage.DeleteDirectory(dir);
 
             if (result)
             {
-                TempData["SuccessDelete"] = fileDeleted.Name;
+                TempData["SuccessDeleteDir"] = dirDeleted.Name;
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["ErrorDelete"] = fileDeleted.Name;
+                TempData["ErrorDeleteDir"] = dirDeleted.Name;
                 return RedirectToAction("Index");
             }
         }
