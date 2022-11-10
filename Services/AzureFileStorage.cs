@@ -10,17 +10,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace FileStorage.Services
 {
-    public class AzureFileStorage
+    public interface IAzureFileStorage{
+        void SetDir(string dirName);
+        void UploadFile(string fileName, string filePath);
+        CloudFile DownloadFile(string fileName);
+        IEnumerable<ShareFileItem> ViewFiles();
+        bool DeleteFile(string fileName);
+        IEnumerable<ShareFileItem> GetDirectories();
+        bool CreateDirectory(string dirName);
+    }
+    public class AzureFileStorage : IAzureFileStorage
     {
-        private const string connectionString = "DefaultEndpointsProtocol=https;AccountName=jedifilestorageaccount;AccountKey=lLJPCZqidvkjfoOiGOA5WEkCdSsZdrQfjt021sGK5g0hq65OuoBm8gD0Rx1C9gcjrNwYzDYR9kCe+ASteLYwzw==;EndpointSuffix=core.windows.net";
-        private const string shareName = "share";
-        private const string dirName = "dir";
+        private string connectionString;
+        private string shareName;
+        private string dirName;
 
+        public AzureFileStorage(string shareName) {
+            connectionString = ConfigurationManager.AppSettings["connectionString"];
+            this.shareName = shareName;
+        }
+        public void SetDir(string dirName)
+        {
+            this.dirName = dirName;
+        }
 
-        public static void UploadFile(string dirName, string fileName, string filePath)
+        public void UploadFile(string fileName, string filePath)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
@@ -44,7 +62,7 @@ namespace FileStorage.Services
         }
 
 
-        public static CloudFile DownloadFile(string name)
+        public CloudFile DownloadFile(string fileName)
         {
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -61,26 +79,13 @@ namespace FileStorage.Services
             CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(dirName);
 
             // Get a reference to the file we created previously.
-            CloudFile file = sampleDir.GetFileReference(name);
+            CloudFile file = sampleDir.GetFileReference(fileName);
 
             Console.WriteLine("File Downloaded...");
             return file;
         }
 
-        public static IEnumerable<ShareFileItem> ViewFiles(string dirName)
-        {
-            ShareClient share = new ShareClient(connectionString, shareName);
-            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
-            var files = directory.GetFilesAndDirectories();
-
-            foreach (var file in files)
-            {
-                Console.WriteLine(file.Name);
-            }
-
-            return files;
-        }
-        public static IEnumerable<ShareFileItem> ViewFiles()
+        public IEnumerable<ShareFileItem> ViewFiles()
         {
             ShareClient share = new ShareClient(connectionString, shareName);
             ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
@@ -95,7 +100,7 @@ namespace FileStorage.Services
         }
 
 
-        public static bool DeleteFile(string fileName)
+        public bool DeleteFile(string fileName)
         {
             try
             {
@@ -120,7 +125,7 @@ namespace FileStorage.Services
 
         // DIR
 
-        public static IEnumerable<ShareFileItem> GetDirectories()
+        public IEnumerable<ShareFileItem> GetDirectories()
         {
             ShareClient share = new ShareClient(connectionString, shareName);
             share.CreateIfNotExists();
@@ -128,14 +133,14 @@ namespace FileStorage.Services
             return share.GetRootDirectoryClient().GetFilesAndDirectories();
         }
 
-        public static bool CreateDirectory(string _dirName)
+        public bool CreateDirectory(string dirName)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
             share.CreateIfNotExists();
 
             // Get a reference to a directory and create it
-            ShareDirectoryClient directory = share.GetDirectoryClient(_dirName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
 
             try
             {

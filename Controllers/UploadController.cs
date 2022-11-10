@@ -10,6 +10,17 @@ namespace FileStorage.Controllers
 {
     public class UploadController : Controller
     {
+        IAzureFileStorage AzureFileStorage;
+        public UploadController(IAzureFileStorage AzureFileStorage)
+        {
+            this.AzureFileStorage = AzureFileStorage;
+        }
+        public UploadController()
+        {
+            this.AzureFileStorage = new AzureFileStorage("share");
+        }
+
+
         // GET: Upload
         public ActionResult Index()
         {
@@ -20,7 +31,7 @@ namespace FileStorage.Controllers
         [HttpPost]
         public ActionResult UploadFile(string dir, HttpPostedFileBase file)
         {
-            var _dir = dir;
+
             try
             {
                 string _FileName = Path.GetFileName(file.FileName);
@@ -28,7 +39,8 @@ namespace FileStorage.Controllers
                 // save file
                 file.SaveAs(_path);
                 // upload file
-                AzureFileStorage.UploadFile(_dir, _FileName, _path);
+                AzureFileStorage.SetDir(dir);
+                AzureFileStorage.UploadFile(_FileName, _path);
                 // delete file
                 System.IO.File.Delete(_path);
 
