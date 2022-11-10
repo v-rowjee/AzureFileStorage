@@ -17,7 +17,7 @@ namespace FileStorage.Controllers
         }
         public UploadController()
         {
-            this.AzureFileStorage = new AzureFileStorage("share");
+            this.AzureFileStorage = new AzureFileStorage();
         }
 
 
@@ -39,7 +39,7 @@ namespace FileStorage.Controllers
                 // save file
                 file.SaveAs(_path);
                 // upload file
-                AzureFileStorage.SetDir(dir);
+                AzureFileStorage.Init(dir);
                 AzureFileStorage.UploadFile(_FileName, _path);
                 // delete file
                 System.IO.File.Delete(_path);

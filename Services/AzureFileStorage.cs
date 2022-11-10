@@ -15,7 +15,8 @@ using System.Configuration;
 namespace FileStorage.Services
 {
     public interface IAzureFileStorage{
-        void SetDir(string dirName);
+        void Init(string dirName);
+        void Init(string shareName, string dirName);
         void UploadFile(string fileName, string filePath);
         CloudFile DownloadFile(string fileName);
         IEnumerable<ShareFileItem> ViewFiles();
@@ -29,12 +30,17 @@ namespace FileStorage.Services
         private string shareName;
         private string dirName;
 
-        public AzureFileStorage(string shareName) {
+        public AzureFileStorage() {
             connectionString = ConfigurationManager.AppSettings["connectionString"];
-            this.shareName = shareName;
         }
-        public void SetDir(string dirName)
+        public void Init(string shareName,string dirName)
         {
+            this.shareName = shareName;
+            this.dirName = dirName;
+        }
+        public void Init(string dirName)
+        {
+            this.shareName = "share";
             this.dirName = dirName;
         }
 
