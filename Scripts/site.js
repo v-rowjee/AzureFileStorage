@@ -15,7 +15,7 @@ $('#createDir').click(() => {
         $.ajax({
             type: "POST",
             url: "/Upload/CreateDir",
-            data: { dirname },
+            data: { dirname: dirname },
             dataType: "json",
             success: (reponse) => {
                 if (reponse) {
@@ -30,14 +30,3 @@ $('#createDir').click(() => {
         $('#modal').modal('hide');
     }
 })
-
-
-
-$('#changeDir').change(() => {
-    var URL = window.location.href.split('/')[0]
-
-    URL += $('#changeDir').val()
-
-    window.location.href = URL
-
-});

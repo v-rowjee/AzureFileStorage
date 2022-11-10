@@ -59,6 +59,7 @@ namespace FileStorage.Controllers
         [HttpPost]
         public JsonResult CreateDir(string dirname)
         {
+            AzureFileStorage.Init();
             var result = AzureFileStorage.CreateDirectory(dirname);
 
             return Json(new { result = result });

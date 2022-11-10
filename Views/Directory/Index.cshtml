@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Directory";
+}
+
+<div class="row">
+    <div class="col-6 col-md">
+        <h2 class="fw-bold mb-3">List of Directories</h2>
+    </div>
+    <div class="col-6 col-md-auto">
+        <button type="button" class="btn btn-dark px-5" title="Create Directory" data-bs-toggle="modal" data-bs-target="#modal">
+            <i class="fa-solid fa-plus me-3"></i>Add Directory
+        </button>
+    </div>
+</div>
+
+<div class="table-responsive mb-4">
+    <table class="table table-borderless table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col" class="text-center text-muted">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Dir in ViewBag.Dirs)
+            {
+                <tr class="align-middle">
+                    <td>@Dir.Id</td>
+                    <td>@Dir.Name</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("Delete", "Directory", FormMethod.Post))
+                        {
+                            <input type="hidden" name="dir" value="@Dir.Name" />
+                            <button id="delete" class="btn btn-light text-danger px-4" title="Delete Directory">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="createDirForm">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="dirname" class="form-control my-4" placeholder="Directory Name" autofocus />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                    <button type="submit" id="createDir" class="btn btn-primary px-5">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

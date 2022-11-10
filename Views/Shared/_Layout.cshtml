@@ -27,6 +27,9 @@
                     <li class="nav-item mx-2">
                         @Html.ActionLink("Files", "Index", "Files", null, new { @class = @ViewBag.Title == "Files" ? "nav-link active" : "nav-link" })
                     </li>
+                    <li class="nav-item mx-2">
+                        @Html.ActionLink("Directories", "Index", "Directory", null, new { @class = @ViewBag.Title == "Directory" ? "nav-link active" : "nav-link" })
+                    </li>
                 </ul>
             </div>
         </div>

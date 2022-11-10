@@ -24,6 +24,7 @@ namespace FileStorage.Services
         bool DeleteFile(string fileName);
         IEnumerable<ShareFileItem> GetDirectories();
         bool CreateDirectory(string dirName);
+        bool DeleteDirectory(string dirName);
     }
     public class AzureFileStorage : IAzureFileStorage
     {
@@ -163,6 +164,26 @@ namespace FileStorage.Services
                 return false;
             }
 
+        }
+
+        public bool DeleteDirectory(string dirName)
+        {
+            // Get a reference to a share and then create it
+            ShareClient share = new ShareClient(connectionString, shareName);
+            share.CreateIfNotExists();
+
+            // Get a reference to a directory and create it
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
+
+            try
+            {
+                directory.DeleteIfExists();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }
