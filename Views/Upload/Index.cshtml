@@ -50,19 +50,20 @@
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="createDirForm">
+            @using (Html.BeginForm("CreateDir", "Upload", FormMethod.Post))
+            {
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="dirname" class="form-control my-4" placeholder="Directory Name" autofocus />
+                    <input type="text" name="dirname" class="form-control my-4" placeholder="Directory Name" autofocus />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
                     <button type="submit" id="createDir" class="btn btn-primary px-5">Add</button>
                 </div>
-            </form>
+            }
         </div>
     </div>
 </div>
