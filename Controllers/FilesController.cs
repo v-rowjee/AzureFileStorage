@@ -37,14 +37,15 @@ namespace FileStorage.Controllers
 
         // POST: Files/Download
         [HttpPost]
-        public ActionResult Download(string name)
+        public ActionResult Download(string dir, string name)
         {
             var fileName = name;
+            var dirName = dir;
             MemoryStream ms = new MemoryStream();
 
             try
             {
-                var file = AzureFileStorage.DownloadFile(fileName);
+                var file = AzureFileStorage.DownloadFile(dirName, fileName);
 
                 // Write the contents of the file to the console window.
                 file.DownloadToStreamAsync(ms);
@@ -62,12 +63,12 @@ namespace FileStorage.Controllers
 
         // POST: Files/Delete
         [HttpPost]
-        public ActionResult Delete(string name)
+        public ActionResult Delete(string dir, string name)
         {
-            var fileDeleted = AzureFileStorage.ViewFiles()
+            var fileDeleted = AzureFileStorage.ViewFiles(dir)
                 .FirstOrDefault(m => m.Name.Equals(name));
 
-            var result = AzureFileStorage.DeleteFile(name);
+            var result = AzureFileStorage.DeleteFile(dir, name);
 
             if (result)
             {

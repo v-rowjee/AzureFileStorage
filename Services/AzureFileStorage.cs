@@ -44,7 +44,7 @@ namespace FileStorage.Services
         }
 
 
-        public static CloudFile DownloadFile(string name)
+        public static CloudFile DownloadFile(string dirName, string fileName)
         {
 
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
@@ -61,7 +61,7 @@ namespace FileStorage.Services
             CloudFileDirectory sampleDir = rootDir.GetDirectoryReference(dirName);
 
             // Get a reference to the file we created previously.
-            CloudFile file = sampleDir.GetFileReference(name);
+            CloudFile file = sampleDir.GetFileReference(fileName);
 
             Console.WriteLine("File Downloaded...");
             return file;
@@ -80,22 +80,8 @@ namespace FileStorage.Services
 
             return files;
         }
-        public static IEnumerable<ShareFileItem> ViewFiles()
-        {
-            ShareClient share = new ShareClient(connectionString, shareName);
-            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
-            var files = directory.GetFilesAndDirectories();
 
-            foreach (var file in files)
-            {
-                Console.WriteLine(file.Name);
-            }
-
-            return files;
-        }
-
-
-        public static bool DeleteFile(string fileName)
+        public static bool DeleteFile(string dirName, string fileName)
         {
             try
             {
@@ -128,14 +114,14 @@ namespace FileStorage.Services
             return share.GetRootDirectoryClient().GetFilesAndDirectories();
         }
 
-        public static bool CreateDirectory(string _dirName)
+        public static bool CreateDirectory(string dirName)
         {
             // Get a reference to a share and then create it
             ShareClient share = new ShareClient(connectionString, shareName);
             share.CreateIfNotExists();
 
             // Get a reference to a directory and create it
-            ShareDirectoryClient directory = share.GetDirectoryClient(_dirName);
+            ShareDirectoryClient directory = share.GetDirectoryClient(dirName);
 
             try
             {
