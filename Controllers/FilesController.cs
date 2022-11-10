@@ -87,7 +87,7 @@ namespace FileStorage.Controllers
             var fileDeleted = AzureFileStorage.ViewFiles()
                 .FirstOrDefault(m => m.Name.Equals(name));
 
-            var result = AzureFileStorage.DeleteFile(dir, name);
+            var result = AzureFileStorage.DeleteFile(name);
 
             if (result)
             {
