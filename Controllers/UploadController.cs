@@ -24,6 +24,7 @@ namespace FileStorage.Controllers
         // GET: Upload
         public ActionResult Index()
         {
+            AzureFileStorage.Init();
             ViewBag.Directories = AzureFileStorage.GetDirectories();
             return View();
         }
